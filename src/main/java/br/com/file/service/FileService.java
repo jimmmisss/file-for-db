@@ -31,16 +31,16 @@ public class FileService {
 
             File file = new File();
 
-            file.setIdNumberFile(identifier);
-            file.setNumberFile(number);
-            fileRepository.save(file);
+            if(identifier.isEmpty() || number.isEmpty()) {
+                file.setIdNumberFile(identifier);
+                file.setNumberFile(number);
+                fileRepository.save(file);
+            }
 
             scannerLine.close();
-
         }
 
         scanner.close();
-
     }
 
 }

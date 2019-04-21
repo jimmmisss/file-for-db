@@ -2,6 +2,7 @@ package br.com.file.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "file_lucky_number", schema = "file")
@@ -12,13 +13,16 @@ public class File implements Serializable {
     private Integer id;
     private String idNumberFile;
     private String numberFile;
+    private LocalDateTime dateInsertionFile = LocalDateTime.now();
+
     public File() {
         super();
     }
 
-    public File(String idNumberFile, String numberFile) {
+    public File(String idNumberFile, String numberFile, LocalDateTime dateInsertionFile) {
         this.idNumberFile = idNumberFile;
         this.numberFile = numberFile;
+        this.dateInsertionFile = dateInsertionFile;
     }
 
     public Integer getId() {
@@ -45,4 +49,11 @@ public class File implements Serializable {
         this.numberFile = numberFile;
     }
 
+    public LocalDateTime getDateInsertionFile() {
+        return dateInsertionFile;
+    }
+
+    public void setDateInsertionFile(LocalDateTime dateInsertionFile) {
+        this.dateInsertionFile = dateInsertionFile;
+    }
 }
