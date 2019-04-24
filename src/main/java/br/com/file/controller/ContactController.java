@@ -24,11 +24,18 @@ public class ContactController {
 
     @GetMapping("/generate")
     public void writerContactFile() throws IOException {
-        contactService.writerContactFile();
+        String filename = "/home/rita/Documents/ZURICH.txt";
+        contactService.writerContactFile(filename);
+    }
+
+    @GetMapping("/generate-xls")
+    public void writerContactFileXlx() throws IOException {
+        String filename = "/home/rita/Documents/contact.xlsx";
+        contactService.writerContactFileXlx(filename);
     }
 
     @PostMapping("/save-contact")
-    public ResponseEntity<Contact> save(Contact contact) {
+    public ResponseEntity<?> save(Contact contact) {
         return ResponseEntity.ok(contactService.save(contact));
     }
 }
