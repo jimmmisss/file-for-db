@@ -34,7 +34,7 @@ public class ContactController {
         contactService.writerContactFileXlx(filename);
     }
 
-    @PostMapping("/save-contact")
+    @PostMapping("/saveTxt-contact")
     public ResponseEntity<?> save(Contact contact) {
         return ResponseEntity.ok(contactService.save(contact));
     }

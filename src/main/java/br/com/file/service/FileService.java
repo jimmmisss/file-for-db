@@ -2,10 +2,17 @@ package br.com.file.service;
 
 import br.com.file.entity.File;
 import br.com.file.repository.FileRepository;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 @Service
@@ -18,7 +25,7 @@ public class FileService {
         this.fileRepository = fileRepository;
     }
 
-    public void save(String filename) throws IOException {
+    public void saveTxt(String filename) throws IOException {
 
         Scanner scanner = new Scanner(new java.io.File(filename));
 
@@ -41,6 +48,33 @@ public class FileService {
         }
 
         scanner.close();
+    }
+
+    public void saveExcel(String filename) throws IOException {
+
+        FileInputStream input = new FileInputStream(new java.io.File(filename));
+
+        XSSFWorkbook workbook = new XSSFWorkbook(input);
+        XSSFSheet sheet = workbook.getSheetAt(0);
+
+        Iterator<Row> iterator = (Iterator<Row>) sheet.iterator();
+
+        while(iterator.hasNext()) {
+            Row currentRow = iterator.next();
+            Iterator<Cell> cell = currentRow.iterator();
+
+            while(cell.hasNext()) {
+                Cell currentCell = cell.next();
+
+                if (currentCell.getCellTypeEnum() == CellType.STRING) {
+                    System.out.println(currentCell.getStringCellValue());
+                }
+                if (currentCell.getCellTypeEnum() == CellType.NUMERIC) {
+                    System.out.println(currentCell.getNumericCellValue() + "");
+                }
+            }
+        }
+
     }
 
 }

@@ -22,6 +22,6 @@ public class FileController {
     @GetMapping("/generate")
     public void save() throws IOException {
         String filename = "/home/rita/Downloads/RTPD0001019741010201.txt";
-        fileService.save(filename);
+        fileService.saveTxt(filename);
     }
 }

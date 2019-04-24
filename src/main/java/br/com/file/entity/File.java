@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "file_lucky_number", schema = "file")
+@Table(name = "file_lucky_number")
 public class File implements Serializable {
 
     @Id
