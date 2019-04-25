@@ -2,8 +2,7 @@ package br.com.file.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "contact")
@@ -13,14 +12,14 @@ public class Contact implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String nomeContact;
-    private Integer ageContact;
-    private BigDecimal incomeContact;
-    private LocalDateTime dateInsertionContact = LocalDateTime.now();
+    private String ageContact;
+    private String incomeContact;
+    private String dateInsertionContact;
 
     public Contact() {
     }
 
-    public Contact(String nomeContact, Integer ageContact, BigDecimal incomeContact, LocalDateTime dateInsertionContact) {
+    public Contact(String nomeContact, String ageContact, String incomeContact, String dateInsertionContact) {
         this.nomeContact = nomeContact;
         this.ageContact = ageContact;
         this.incomeContact = incomeContact;
@@ -43,27 +42,27 @@ public class Contact implements Serializable {
         this.nomeContact = nomeContact;
     }
 
-    public Integer getAgeContact() {
+    public String getAgeContact() {
         return ageContact;
     }
 
-    public void setAgeContact(Integer ageContact) {
+    public void setAgeContact(String ageContact) {
         this.ageContact = ageContact;
     }
 
-    public BigDecimal getIncomeContact() {
+    public String getIncomeContact() {
         return incomeContact;
     }
 
-    public void setIncomeContact(BigDecimal incomeContact) {
+    public void setIncomeContact(String incomeContact) {
         this.incomeContact = incomeContact;
     }
 
-    public LocalDateTime getDateInsertionContact() {
+    public String getDateInsertionContact() {
         return dateInsertionContact;
     }
 
-    public void setDateInsertionContact(LocalDateTime dateInsertionContact) {
+    public void setDateInsertionContact(String dateInsertionContact) {
         this.dateInsertionContact = dateInsertionContact;
     }
 }

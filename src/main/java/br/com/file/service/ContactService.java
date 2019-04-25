@@ -2,9 +2,14 @@ package br.com.file.service;
 
 import br.com.file.entity.Contact;
 import br.com.file.repository.ContactRepository;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -12,14 +17,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.math.BigDecimal;
+import java.io.*;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 @Service
 public class ContactService {
@@ -47,8 +48,50 @@ public class ContactService {
         pw.close();
     }
 
-    public Contact save(Contact contact) {
-        return contactRepository.save(contact);
+    public void saveExcelDb(String filename) throws IOException {
+
+        try {
+
+            XSSFWorkbook wb = new XSSFWorkbook(filename);
+            Sheet sheet = wb.getSheetAt(0);
+            Iterator lines = sheet.rowIterator();
+
+            while(lines.hasNext()) {
+                XSSFRow line = (XSSFRow) lines.next();
+                Iterator cell = line.cellIterator();
+                Contact contact = new Contact();
+                while(cell.hasNext()) {
+                    XSSFCell cels = (XSSFCell) cell.next();
+
+                    int i = cels.getColumnIndex();
+
+                    switch (i) {
+                        case 0:
+                            System.out.print("Nome: " + cels.toString() + " - ");
+                            contact.setNomeContact(cels.toString());
+                        case 1:
+                            System.out.print("Age: " + cels.toString() + " - ");
+                            contact.setAgeContact(cels.toString());
+                        case 2:
+                            System.out.print("income: " + cels.toString() + " - ");
+                            contact.setIncomeContact(cels.toString());
+                        case 3:
+                            System.out.println("Date: " + cels);
+                            contact.setDateInsertionContact(cels.toString());
+                    }
+
+                    contactRepository.save(contact);
+                    System.out.println("Created");
+
+                }
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IOException("Erro ao processar arquivo.", e.getCause());
+        }
+
     }
 
     public void writerContactFileXlx(String filename) throws IOException {

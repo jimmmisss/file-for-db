@@ -3,9 +3,7 @@ package br.com.file.controller;
 import br.com.file.entity.Contact;
 import br.com.file.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,8 +32,9 @@ public class ContactController {
         contactService.writerContactFileXlx(filename);
     }
 
-    @PostMapping("/saveTxt-contact")
-    public ResponseEntity<?> save(Contact contact) {
-        return ResponseEntity.ok(contactService.save(contact));
+    @GetMapping("/save-excel-contact")
+    public void save(Contact contact) throws IOException {
+        String filename = "/home/rita/Documents/contact.xlsx";
+        contactService.saveExcelDb(filename);
     }
 }

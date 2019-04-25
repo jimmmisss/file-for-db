@@ -3,7 +3,6 @@ package br.com.file.service;
 import br.com.file.entity.File;
 import br.com.file.repository.FileRepository;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -66,10 +65,10 @@ public class FileService {
             while(cell.hasNext()) {
                 Cell currentCell = cell.next();
 
-                if (currentCell.getCellTypeEnum() == CellType.STRING) {
+                if (currentCell.getCellType() == Cell.CELL_TYPE_STRING) {
                     System.out.println(currentCell.getStringCellValue());
                 }
-                if (currentCell.getCellTypeEnum() == CellType.NUMERIC) {
+                if (currentCell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
                     System.out.println(currentCell.getNumericCellValue() + "");
                 }
             }
